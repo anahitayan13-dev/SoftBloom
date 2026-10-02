@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="SoftBloom.API/SoftBloom.API.csproj" />
   <Project Path="SoftBloom.Modelos/SoftBloom.Modelos.csproj" />
 </Solution>

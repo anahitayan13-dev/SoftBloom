@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace SoftBloomModelos
+namespace SoftBloom.Modelos
 {
     [Table("Pedidos")]
     public class Pedido
