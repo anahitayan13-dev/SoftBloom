@@ -1,0 +1,68 @@
+@using SoftBloom.Modelos
+@model Producto
+
+@{
+    ViewData["Title"] = "Nuevo producto";
+    var categorias = (List<Categoria>)ViewBag.Categorias;
+    var materiales = (List<Material>)ViewBag.Materiales;
+}
+
+<h1>Nuevo producto</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="NombreProducto" class="form-label">Nombre del producto</label>
+                <input asp-for="NombreProducto" class="form-control" />
+                <span asp-validation-for="NombreProducto" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Descripcion" class="form-label">Descripción</label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Precio" class="form-label">Precio</label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Stock" class="form-label">Stock</label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="IdCategoria" class="form-label">Categoría</label>
+                <select asp-for="IdCategoria" class="form-select" required>
+                    <option value="">-- Elige una categoría --</option>
+                    @foreach (var c in categorias)
+                    {
+                        <option value="@c.IdCategoria">@c.NombreCategoria</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="IdMaterial" class="form-label">Material</label>
+                <select asp-for="IdMaterial" class="form-select" required>
+                    <option value="">-- Elige un material --</option>
+                    @foreach (var m in materiales)
+                    {
+                        <option value="@m.IdMaterial">@m.NombreMaterial</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Volver a la lista</a>
+        </form>
+    </div>
+</div>

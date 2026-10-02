@@ -1,0 +1,56 @@
+@model IEnumerable<SoftBloom.Modelos.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h1>Clientes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Registrar Cliente</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Teléfono</th>
+            <th>Correo electrónico</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Cedula</td>
+
+                <td>@item.Nombres</td>
+
+                <td>@item.Apellidos</td>
+
+                <td>
+                    @(string.IsNullOrEmpty(item.Telefono)
+                        ? "No registrado"
+                        : item.Telefono)
+                </td>
+
+                <td>
+                    @(string.IsNullOrEmpty(item.Email)
+                        ? "No registrado"
+                        : item.Email)
+                </td>
+
+               
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdCliente">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdCliente">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdCliente">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

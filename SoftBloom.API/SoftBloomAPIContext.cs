@@ -11,4 +11,6 @@ public class SoftBloomAPIContext(
     public DbSet<Producto> Productos { get; set; } = default!;
     public DbSet<Pedido> Pedidos { get; set; } = default!;
     public DbSet<DetallePedido> DetallesPedidos { get; set; } = default!;
+    public DbSet<Usuario> Usuarios { get; set; } = default!;
+
 }

@@ -1,0 +1,46 @@
+@using SoftBloom.Modelos
+@model IEnumerable<Producto>
+
+@{
+    ViewData["Title"] = "Productos";
+    var categorias = (List<Categoria>)ViewBag.Categorias;
+    var materiales = (List<Material>)ViewBag.Materiales;
+}
+
+<h1>Productos</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+            <th>Material</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NombreProducto</td>
+                <td>@item.Descripcion</td>
+                <td>$@(item.Precio.ToString("0.00"))</td>
+                <td>@item.Stock</td>
+                <td>@(categorias.FirstOrDefault(c => c.IdCategoria == item.IdCategoria)?.NombreCategoria)</td>
+                <td>@(materiales.FirstOrDefault(m => m.IdMaterial == item.IdMaterial)?.NombreMaterial)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdProducto">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdProducto">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdProducto">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

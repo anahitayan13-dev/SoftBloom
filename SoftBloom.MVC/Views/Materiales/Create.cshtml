@@ -1,0 +1,60 @@
+@model SoftBloom.Modelos.Material
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Material</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="NombreMaterial" class="control-label"></label>
+                <input asp-for="NombreMaterial" class="form-control" />
+                <span asp-validation-for="NombreMaterial" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TipoMaterial" class="control-label"></label>
+                <input asp-for="TipoMaterial" class="form-control" />
+                <span asp-validation-for="TipoMaterial" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CantidadDisponible" class="control-label"></label>
+                <input asp-for="CantidadDisponible" class="form-control" />
+                <span asp-validation-for="CantidadDisponible" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UnidadMedida" class="control-label"></label>
+                <input asp-for="UnidadMedida" class="form-control" />
+                <span asp-validation-for="UnidadMedida" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Costo" class="control-label"></label>
+                <input asp-for="Costo" class="form-control" />
+                <span asp-validation-for="Costo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Productos" class="control-label"></label>
+                <input asp-for="Productos" class="form-control" />
+                <span asp-validation-for="Productos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

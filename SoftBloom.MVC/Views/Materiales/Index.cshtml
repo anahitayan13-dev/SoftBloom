@@ -1,0 +1,55 @@
+@model IEnumerable<SoftBloom.Modelos.Material>
+
+@{
+    ViewData["Title"] = "Materiales";
+}
+
+<h1>Materiales</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Registrar Material</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Material</th>
+            <th>Tipo</th>
+            <th>Cantidad disponible</th>
+            <th>Unidad de medida</th>
+            <th>Costo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NombreMaterial</td>
+
+                <td>
+                    @(string.IsNullOrEmpty(item.TipoMaterial)
+                        ? "No registrado"
+                        : item.TipoMaterial)
+                </td>
+
+                <td>@item.CantidadDisponible</td>
+
+                <td>
+                    @(string.IsNullOrEmpty(item.UnidadMedida)
+                        ? "No registrada"
+                        : item.UnidadMedida)
+                </td>
+
+                <td>$@item.Costo</td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdMaterial">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdMaterial">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdMaterial">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

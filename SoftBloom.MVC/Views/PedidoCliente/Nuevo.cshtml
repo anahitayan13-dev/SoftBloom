@@ -1,0 +1,97 @@
+﻿@using SoftBloom.Modelos
+
+@{
+    ViewData["Title"] = "Hacer pedido";
+
+    var categorias = (List<Categoria>)ViewBag.Categorias;
+    var materiales = (List<Material>)ViewBag.Materiales;
+    var productos = (List<Producto>)ViewBag.Productos;
+    int? idCategoria = (int?)ViewBag.IdCategoria;
+    int? idMaterial = (int?)ViewBag.IdMaterial;
+    bool clienteExiste = (bool)ViewBag.ClienteExiste;
+}
+
+<h1 class="mb-4">Hacer pedido</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<!-- Paso 1 y 2: categoría y material (se aplican al elegir) -->
+<form asp-action="Nuevo" method="get" class="row g-3 mb-4">
+    <div class="col-md-6">
+        <label class="form-label">1. Elige la categoría</label>
+        <select name="idCategoria" class="form-select" onchange="this.form.submit()">
+            <option value="">-- Elige una categoría --</option>
+            @foreach (var c in categorias)
+            {
+                <option value="@c.IdCategoria" selected="@(idCategoria == c.IdCategoria)">@c.NombreCategoria</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">2. Elige el material</label>
+        <select name="idMaterial" class="form-select" onchange="this.form.submit()" disabled="@(!idCategoria.HasValue)">
+            <option value="">-- Elige un material --</option>
+            @foreach (var m in materiales)
+            {
+                <option value="@m.IdMaterial" selected="@(idMaterial == m.IdMaterial)">@m.NombreMaterial</option>
+            }
+        </select>
+    </div>
+</form>
+
+<!-- Pasos 3 y 4: solo aparecen con categoría y material elegidos -->
+@if (idCategoria.HasValue && idMaterial.HasValue)
+{
+    @if (!productos.Any())
+    {
+        <div class="alert alert-warning">
+            No hay productos disponibles con esa categoría y ese material. Prueba con otro material.
+        </div>
+    }
+    else
+    {
+        <form asp-action="Crear" method="post">
+            <input type="hidden" name="idCategoria" value="@idCategoria" />
+            <input type="hidden" name="idMaterial" value="@idMaterial" />
+
+            <div class="mb-3">
+                <label class="form-label">3. Elige el producto</label>
+                <select name="idProducto" class="form-select" required>
+                    <option value="">-- Elige un producto --</option>
+                    @foreach (var p in productos)
+                    {
+                        <option value="@p.IdProducto">
+                            @p.NombreProducto - $@(p.Precio.ToString("0.00")) (disponibles: @p.Stock)
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">4. Cantidad</label>
+                <input type="number" name="cantidad" value="1" min="1" class="form-control" style="max-width:120px" />
+            </div>
+
+            @if (!clienteExiste)
+            {
+                <div class="alert alert-info">Es tu primer pedido, necesitamos unos datos más.</div>
+
+                <div class="mb-3">
+                    <label class="form-label">Cédula</label>
+                    <input type="text" name="cedula" maxlength="10" class="form-control" style="max-width:250px" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" name="telefono" maxlength="15" class="form-control" style="max-width:250px" />
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary">Realizar pedido</button>
+        </form>
+    }
+}

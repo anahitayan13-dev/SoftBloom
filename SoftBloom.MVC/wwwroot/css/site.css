@@ -1,0 +1,324 @@
+/* ===== Tema SoftBloom: rosa pastel ===== */
+:root {
+    --rosa: #e0829b;
+    --rosa-oscuro: #d06b88;
+    --rosa-titulo: #b5546f;
+    --rosa-claro: #fbe4e8;
+    --fondo: #fdf0f1;
+    --texto: #7a5560;
+    --borde: #ecd9dd;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-size: 15px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+    color: var(--texto);
+    background: linear-gradient(135deg, #fff6f6 0%, var(--fondo) 50%, var(--rosa-claro) 100%) fixed;
+}
+
+/* ===== Títulos y enlaces ===== */
+h1, h2, h3, h4, h5 {
+    color: var(--rosa-titulo);
+    font-weight: 700;
+}
+
+a {
+    color: var(--rosa-oscuro);
+}
+
+    a:hover {
+        color: var(--rosa-titulo);
+    }
+
+hr {
+    border-color: var(--borde);
+    opacity: 1;
+}
+
+/* ===== Menú superior ===== */
+.navbar {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border-bottom: 1px solid var(--borde) !important;
+    box-shadow: 0 4px 20px rgba(224, 130, 155, 0.12) !important;
+}
+
+.navbar-brand {
+    color: var(--rosa-oscuro) !important;
+    font-weight: 700;
+}
+
+.navbar .nav-link {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+    .navbar .nav-link:hover {
+        color: var(--rosa-oscuro);
+    }
+
+.navbar-text {
+    color: var(--texto);
+}
+
+/* ===== Botones ===== */
+.btn {
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background-color: var(--rosa);
+    border-color: var(--rosa);
+    color: #fff;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active {
+        background-color: var(--rosa-oscuro);
+        border-color: var(--rosa-oscuro);
+        color: #fff;
+    }
+
+.btn-outline-primary {
+    color: var(--rosa-oscuro);
+    border-color: var(--rosa);
+}
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:active {
+        background-color: var(--rosa);
+        border-color: var(--rosa);
+        color: #fff;
+    }
+
+.btn-outline-secondary {
+    color: var(--texto);
+    border-color: var(--borde);
+}
+
+    .btn-outline-secondary:hover {
+        background-color: var(--rosa-claro);
+        border-color: var(--rosa);
+        color: var(--rosa-titulo);
+    }
+
+.btn-outline-danger {
+    color: #c9506b;
+    border-color: #e9a3b3;
+}
+
+    .btn-outline-danger:hover {
+        background-color: #c9506b;
+        border-color: #c9506b;
+        color: #fff;
+    }
+
+/* Enlace "Create New" convertido en botón */
+a[href$="/Create"] {
+    display: inline-block;
+    background: var(--rosa);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: 0.2s;
+}
+
+    a[href$="/Create"]:hover {
+        background: var(--rosa-oscuro);
+        color: #fff;
+    }
+
+/* ===== Tablas ===== */
+.table {
+    --bs-table-bg: transparent;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 6px 24px rgba(224, 130, 155, 0.15);
+    color: var(--texto);
+}
+
+    .table thead th {
+        background: var(--rosa-claro);
+        color: var(--rosa-titulo);
+        border-bottom: 2px solid #f3c9d3;
+        padding: 0.9rem 1rem;
+    }
+
+    .table td,
+    .table th {
+        border-color: #f6e3e7;
+        padding: 0.85rem 1rem;
+    }
+
+    .table tbody tr:hover td {
+        background-color: #fff7f8;
+    }
+
+/* Enlaces Edit | Details | Delete como botoncitos */
+td:has(a[href*="/Edit/"], a[href*="/Details/"], a[href*="/Delete/"]) {
+    font-size: 0; /* oculta las barras " | " entre enlaces */
+    white-space: nowrap;
+}
+
+td a[href*="/Edit/"],
+td a[href*="/Details/"],
+td a[href*="/Delete/"] {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    margin-right: 6px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: var(--rosa-claro);
+    color: var(--rosa-titulo);
+}
+
+    td a[href*="/Edit/"]:hover,
+    td a[href*="/Details/"]:hover {
+        background: var(--rosa);
+        color: #fff;
+    }
+
+td a[href*="/Delete/"] {
+    background: #fde3e8;
+    color: #c9506b;
+}
+
+    td a[href*="/Delete/"]:hover {
+        background: #c9506b;
+        color: #fff;
+    }
+
+/* ===== Formularios ===== */
+label,
+.form-label,
+.control-label {
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.form-control,
+.form-select {
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    color: var(--texto);
+    background-color: #fff;
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--rosa);
+        box-shadow: 0 0 0 4px rgba(224, 130, 155, 0.15);
+        color: var(--texto);
+    }
+
+    .form-control::placeholder,
+    textarea::placeholder {
+        color: #b9a6ac;
+    }
+
+.form-text {
+    color: #a8979d;
+}
+
+.text-danger {
+    color: #c9506b !important;
+}
+
+/* ===== Tarjetas ===== */
+.card {
+    border: none;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 24px rgba(224, 130, 155, 0.15) !important;
+    overflow: hidden;
+}
+
+.card-header {
+    background: var(--rosa-claro);
+    color: var(--rosa-titulo);
+    font-weight: 700;
+    border-bottom: 1px solid var(--borde);
+}
+
+.card-footer {
+    background: transparent;
+}
+
+/* ===== Alertas ===== */
+.alert {
+    border-radius: 12px;
+    border: 1px solid transparent;
+}
+
+.alert-danger {
+    background: #fde8ec;
+    color: #b0445f;
+    border-color: #f6c7d1;
+}
+
+.alert-success {
+    background: #eaf6ee;
+    color: #3d7a55;
+    border-color: #c8e6d2;
+}
+
+.alert-warning {
+    background: #fff4e0;
+    color: #8a6420;
+    border-color: #f5dfb0;
+}
+
+.alert-info {
+    background: #fceef3;
+    color: #9a4d68;
+    border-color: #f3cfdb;
+}
+
+/* ===== Etiquetas de estado ===== */
+.badge {
+    border-radius: 999px;
+    padding: 0.45em 0.8em;
+    font-weight: 700;
+}
+
+    .badge.bg-primary {
+        background-color: var(--rosa-oscuro) !important;
+    }
+
+/* ===== Detalles (dt / dd) ===== */
+dt {
+    color: var(--rosa-titulo);
+}
+
+/* ===== Pie de página ===== */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background: rgba(255, 255, 255, 0.6);
+    border-top: 1px solid var(--borde) !important;
+    color: var(--texto) !important;
+}

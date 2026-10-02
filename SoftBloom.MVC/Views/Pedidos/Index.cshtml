@@ -1,0 +1,63 @@
+@using SoftBloom.Modelos
+@model List<Pedido>
+
+@{
+    ViewData["Title"] = "Pedidos";
+
+    var clientes = (List<Cliente>)ViewBag.Clientes;
+    var detalles = (List<DetallePedido>)ViewBag.Detalles;
+
+    string Color(string? estado) => estado switch
+    {
+        "Pendiente" => "bg-warning text-dark",
+        "En proceso" => "bg-info text-dark",
+        "Terminado" => "bg-primary",
+        "Entregado" => "bg-success",
+        _ => "bg-secondary"
+    };
+}
+
+<h1 class="mb-4">Pedidos</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>Aún no hay pedidos.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                var cliente = clientes.FirstOrDefault(c => c.IdCliente == p.IdCliente);
+                var total = detalles.Where(d => d.IdPedido == p.IdPedido).Sum(d => d.Cantidad * d.PrecioUnitario);
+
+                <tr>
+                    <td>@p.IdPedido</td>
+                    <td>@p.FechaPedido.ToString("dd/MM/yyyy")</td>
+                    <td>@(cliente != null ? cliente.Nombres + " " + cliente.Apellidos : "Cliente")</td>
+                    <td><span class="badge @Color(p.EstadoPedido)">@p.EstadoPedido</span></td>
+                    <td>$@(total.ToString("0.00"))</td>
+                    <td>
+                        <a asp-action="Gestionar" asp-route-id="@p.IdPedido" class="btn btn-sm btn-outline-primary">Gestionar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

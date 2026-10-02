@@ -1,0 +1,50 @@
+﻿@using SoftBloom.Modelos
+@model List<Pedido>
+
+@{
+    ViewData["Title"] = "Mis pedidos";
+
+    var detalles = (List<DetallePedido>)ViewBag.Detalles;
+    var productos = (List<Producto>)ViewBag.Productos;
+}
+
+<h1 class="mb-4">Mis pedidos</h1>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+@if (!Model.Any())
+{
+    <p>Aún no tienes pedidos.</p>
+    <a asp-action="Nuevo" class="btn btn-primary">Hacer un pedido</a>
+}
+else
+{
+    @foreach (var pedido in Model)
+    {
+        var lineas = detalles.Where(d => d.IdPedido == pedido.IdPedido).ToList();
+
+        <div class="card mb-3 shadow-sm">
+            <div class="card-header d-flex justify-content-between">
+                <span>Pedido #@pedido.IdPedido - @pedido.FechaPedido.ToString("dd/MM/yyyy")</span>
+                <span class="badge bg-secondary">@pedido.EstadoPedido</span>
+            </div>
+            <div class="card-body">
+                <ul class="mb-2">
+                    @foreach (var l in lineas)
+                    {
+                        var nombre = productos.FirstOrDefault(p => p.IdProducto == l.IdProducto)?.NombreProducto ?? "Producto";
+                        <li>@nombre x @l.Cantidad - $@((l.Cantidad * l.PrecioUnitario).ToString("0.00"))</li>
+                    }
+                </ul>
+                @if (!string.IsNullOrWhiteSpace(pedido.Observaciones))
+                {
+                    <p class="text-muted mb-1">Observaciones: @pedido.Observaciones</p>
+                }
+                <strong>Total: $@(lineas.Sum(l => l.Cantidad * l.PrecioUnitario).ToString("0.00"))</strong>
+            </div>
+        </div>
+    }
+}

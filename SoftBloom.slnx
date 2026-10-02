@@ -2,4 +2,6 @@
   <Project Path="SoftBloom.API/SoftBloom.API.csproj" />
   <Project Path="SoftBloom.Consumer/SoftBloom.Consumer.csproj" Id="c10a57f2-faf6-4368-9035-408665a474e3" />
   <Project Path="SoftBloom.Modelos/SoftBloom.Modelos.csproj" />
+  <Project Path="SoftBloom.MVC/SoftBloom.MVC.csproj" Id="9f6abd46-7509-43e6-a71c-78d73319dbb3" />
+  <Project Path="SoftBloom.Servicios/SoftBloom.Servicios.csproj" Id="824d58fb-dbe8-400c-86aa-b4a0a7eeff4f" />
 </Solution>

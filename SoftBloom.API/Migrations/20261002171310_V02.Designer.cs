@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SoftBloom.API.Migrations
 {
     [DbContext(typeof(SoftBloomAPIContext))]
-    [Migration("20261001235658_V01")]
-    partial class V01
+    [Migration("20261002171310_V02")]
+    partial class V02
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -183,7 +183,7 @@ namespace SoftBloom.API.Migrations
                         .HasColumnName("fecha_entrega");
 
                     b.Property<DateTime>("FechaPedido")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("fecha_pedido");
 
                     b.Property<int>("IdCliente")
@@ -245,6 +245,39 @@ namespace SoftBloom.API.Migrations
                     b.HasIndex("IdMaterial");
 
                     b.ToTable("Productos");
+                });
+
+            modelBuilder.Entity("SoftBloom.Modelos.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("apellido")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("contrasenia")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("correo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("nombreUsuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("SoftBloom.Modelos.DetallePedido", b =>

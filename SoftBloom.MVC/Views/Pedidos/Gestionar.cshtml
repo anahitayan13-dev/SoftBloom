@@ -1,0 +1,83 @@
+﻿@using SoftBloom.Modelos
+@model Pedido
+
+@{
+    ViewData["Title"] = "Gestionar pedido";
+
+    var cliente = (Cliente?)ViewBag.Cliente;
+    var detalles = (List<DetallePedido>)ViewBag.Detalles;
+    var productos = (List<Producto>)ViewBag.Productos;
+    var estados = (string[])ViewBag.Estados;
+}
+
+<h1 class="mb-4">Pedido #@Model.IdPedido</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="card mb-3 shadow-sm">
+            <div class="card-header">Datos del pedido</div>
+            <div class="card-body">
+                <p class="mb-1"><strong>Fecha:</strong> @Model.FechaPedido.ToString("dd/MM/yyyy HH:mm")</p>
+                <p class="mb-1"><strong>Estado actual:</strong> @Model.EstadoPedido</p>
+                <p class="mb-0"><strong>Lo que pidió el cliente:</strong></p>
+                <p class="text-muted">@(string.IsNullOrWhiteSpace(Model.Observaciones) ? "Sin descripción" : Model.Observaciones)</p>
+
+                <hr />
+
+                <p class="mb-1"><strong>Productos:</strong></p>
+                <ul class="mb-2">
+                    @foreach (var d in detalles)
+                    {
+                        var nombre = productos.FirstOrDefault(p => p.IdProducto == d.IdProducto)?.NombreProducto ?? "Producto";
+                        <li>@nombre x @d.Cantidad - $@((d.Cantidad * d.PrecioUnitario).ToString("0.00"))</li>
+                    }
+                </ul>
+                <strong>Total: $@(detalles.Sum(d => d.Cantidad * d.PrecioUnitario).ToString("0.00"))</strong>
+            </div>
+        </div>
+
+        <div class="card mb-3 shadow-sm">
+            <div class="card-header">Cliente</div>
+            <div class="card-body">
+                @if (cliente != null)
+                {
+                    <p class="mb-1"><strong>Nombre:</strong> @cliente.Nombres @cliente.Apellidos</p>
+                    <p class="mb-1"><strong>Cédula:</strong> @cliente.Cedula</p>
+                    <p class="mb-1"><strong>Teléfono:</strong> @cliente.Telefono</p>
+                    <p class="mb-0"><strong>Correo:</strong> @cliente.Email</p>
+                }
+                else
+                {
+                    <p class="mb-0 text-muted">No se encontró el cliente.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header">Cambiar estado</div>
+            <div class="card-body">
+                <form asp-action="Gestionar" asp-route-id="@Model.IdPedido" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Nuevo estado</label>
+                        <select name="estado" class="form-select">
+                            @foreach (var e in estados)
+                            {
+                                <option value="@e" selected="@(e == Model.EstadoPedido)">@e</option>
+                            }
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar estado</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

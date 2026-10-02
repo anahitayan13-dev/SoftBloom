@@ -244,6 +244,43 @@ namespace SoftBloom.API.Migrations
                     b.ToTable("Productos");
                 });
 
+            modelBuilder.Entity("SoftBloom.Modelos.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("apellido")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("contrasenia")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("correo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("nombreUsuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("rol")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
+                });
+
             modelBuilder.Entity("SoftBloom.Modelos.DetallePedido", b =>
                 {
                     b.HasOne("SoftBloom.Modelos.Pedido", "Pedido")

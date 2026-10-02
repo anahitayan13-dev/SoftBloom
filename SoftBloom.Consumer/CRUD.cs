@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace ClinicaOdontologica.Consumer
+namespace SoftBloom.Consumer
 {
     public static class CRUD<T>
     {
@@ -23,9 +22,8 @@ namespace ClinicaOdontologica.Consumer
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode} ");
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
-
             }
         }
 
@@ -41,7 +39,7 @@ namespace ClinicaOdontologica.Consumer
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode} ");
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
         }
@@ -60,7 +58,7 @@ namespace ClinicaOdontologica.Consumer
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode} ");
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
         }
@@ -69,8 +67,7 @@ namespace ClinicaOdontologica.Consumer
         {
             using (var cliente = new HttpClient())
             {
-                var response = cliente.PutAsync(
-                    $"{Endpoint}/{id}",
+                var response = cliente.PutAsync($"{Endpoint}/{id}",
                     new StringContent(JsonConvert.SerializeObject(item),
                     Encoding.UTF8, "application/json")).Result;
                 if (response.IsSuccessStatusCode)
@@ -79,7 +76,7 @@ namespace ClinicaOdontologica.Consumer
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode} ");
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
         }
@@ -95,7 +92,7 @@ namespace ClinicaOdontologica.Consumer
                 }
                 else
                 {
-                    throw new Exception($"Error: {response.StatusCode} ");
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
         }

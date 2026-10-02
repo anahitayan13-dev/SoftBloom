@@ -1,0 +1,91 @@
+@model IEnumerable<SoftBloom.Modelos.DetallePedido>
+
+@{
+    ViewData["Title"] = "Detalles de pedidos";
+
+    var nombresProductos =
+        ViewBag.NombresProductos as Dictionary<int, string>;
+
+    var nombresPedidos =
+        ViewBag.NombresPedidos as Dictionary<int, string>;
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Detalles de pedidos</h2>
+
+        <a asp-action="Create" class="btn btn-primary">
+            Nuevo detalle
+        </a>
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Pedido</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @if (nombresPedidos != null &&
+                                 nombresPedidos.TryGetValue(item.IdPedido, out var pedido))
+                            {
+                                @pedido
+                            }
+                            else
+                            {
+                                <span>Pedido no encontrado</span>
+                            }
+                        </td>
+
+                        <td>
+                            @if (nombresProductos != null &&
+                                 nombresProductos.TryGetValue(item.IdProducto, out var producto))
+                            {
+                                @producto
+                            }
+                            else
+                            {
+                                <span>Producto no encontrado</span>
+                            }
+                        </td>
+
+                        <td>
+                            @item.Cantidad
+                        </td>
+
+                        <td>
+                            $ @item.PrecioUnitario.ToString("0.00")
+                        </td>
+
+                        
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdDetalle">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.IdDetalle">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IdDetalle">Delete</a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

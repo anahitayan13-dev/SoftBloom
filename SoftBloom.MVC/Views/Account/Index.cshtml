@@ -1,0 +1,243 @@
+﻿@{
+    ViewData["Title"] = "Iniciar sesión";
+    Layout = null; // esta página usa su propio diseño completo
+
+    var correoGuardado = Context.Request.HasFormContentType
+        ? Context.Request.Form["correo"].ToString()
+        : "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SoftBloom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --rosa: #e0829b;
+            --rosa-oscuro: #d06b88;
+            --rosa-claro: #fbe4e8;
+            --fondo: #fdf0f1;
+            --texto: #7a5560;
+            --borde: #ecd9dd;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+            color: var(--texto);
+            background: linear-gradient(135deg, #fff6f6 0%, var(--fondo) 50%, var(--rosa-claro) 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Formas decorativas de fondo */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        body::before {
+            width: 420px; height: 420px;
+            top: -140px; left: -120px;
+            background: radial-gradient(circle, #f8d4db 0%, rgba(248,212,219,0) 70%);
+        }
+        body::after {
+            width: 520px; height: 520px;
+            bottom: -200px; right: -160px;
+            background: radial-gradient(circle, #f6c7d1 0%, rgba(246,199,209,0) 70%);
+        }
+
+        /* Barra superior */
+        .barra {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.55);
+            border-bottom: 1px solid rgba(236, 217, 221, 0.6);
+        }
+        .marca {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--rosa-oscuro);
+            text-decoration: none;
+        }
+        .barra-botones { display: flex; gap: 12px; }
+
+        .btn-borde, .btn-lleno {
+            padding: 9px 22px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: .95rem;
+            text-decoration: none;
+            border: 1.5px solid var(--rosa);
+            transition: .2s;
+        }
+        .btn-borde { color: var(--rosa-oscuro); background: #fff; }
+        .btn-borde:hover { background: var(--rosa-claro); }
+        .btn-lleno { color: #fff; background: var(--rosa); }
+        .btn-lleno:hover { background: var(--rosa-oscuro); }
+
+        /* Tarjeta */
+        .contenedor {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 24px;
+        }
+
+        .tarjeta {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(255, 252, 252, 0.95);
+            border-radius: 18px;
+            padding: 34px 32px 30px;
+            box-shadow: 0 10px 40px rgba(224, 130, 155, 0.18);
+        }
+
+        .logo { text-align: center; font-size: 2.6rem; line-height: 1; margin-bottom: 6px; }
+        .titulo { text-align: center; font-size: 1.5rem; font-weight: 700; margin: 0 0 22px; color: var(--rosa-oscuro); }
+
+        /* Campos */
+        .campo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            border: 1.5px solid var(--borde);
+            border-radius: 12px;
+            padding: 0 16px;
+            margin-bottom: 16px;
+            transition: .2s;
+        }
+        .campo:focus-within {
+            border-color: var(--rosa);
+            box-shadow: 0 0 0 4px rgba(224, 130, 155, 0.15);
+        }
+        .campo svg { flex-shrink: 0; width: 22px; height: 22px; stroke: #8b7a80; }
+        .campo input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 15px 0;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--texto);
+        }
+        .campo input::placeholder { color: #a8979d; }
+
+        /* Botón principal */
+        .btn-principal {
+            width: 100%;
+            padding: 15px;
+            margin-top: 4px;
+            border: none;
+            border-radius: 14px;
+            background: var(--rosa);
+            color: #fff;
+            font-family: inherit;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .btn-principal:hover { background: var(--rosa-oscuro); transform: translateY(-1px); }
+
+        .pie { text-align: center; margin: 20px 0 0; font-size: .98rem; }
+        .pie a { color: var(--rosa-oscuro); font-weight: 700; }
+
+        /* Mensajes */
+        .alerta {
+            background: #fde8ec;
+            color: #b0445f;
+            border: 1px solid #f6c7d1;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: .95rem;
+        }
+        .exito {
+            background: #eaf6ee;
+            color: #3d7a55;
+            border: 1px solid #c8e6d2;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            font-size: .95rem;
+        }
+
+        @@media (max-width: 600px) {
+            .barra { padding: 12px 16px; }
+            .tarjeta { padding: 28px 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="barra">
+        <a class="marca" asp-controller="Home" asp-action="Index">🌸 SoftBloom</a>
+
+        <div class="barra-botones">
+            <a class="btn-borde" asp-controller="Account" asp-action="Index">Iniciar sesión</a>
+            <a class="btn-lleno" asp-controller="Account" asp-action="Register">Registrarse</a>
+        </div>
+    </nav>
+
+    <div class="contenedor">
+        <div class="tarjeta">
+            <div class="logo">🌸</div>
+            <h1 class="titulo">Iniciar sesión</h1>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alerta">@ViewBag.Error</div>
+            }
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="exito">@TempData["Mensaje"]</div>
+            }
+
+            <form asp-controller="Account" asp-action="Index" method="post">
+
+                <div class="campo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                        <path d="M3 7l9 6 9-6"></path>
+                    </svg>
+                    <input type="email" name="correo" value="@correoGuardado" placeholder="Correo electrónico" required />
+                </div>
+
+                <div class="campo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+                        <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+                    </svg>
+                    <input type="password" name="contrasenia" placeholder="Contraseña" required />
+                </div>
+
+                <button type="submit" class="btn-principal">Iniciar sesión</button>
+            </form>
+
+            <p class="pie">¿No tienes una cuenta? <a asp-controller="Account" asp-action="Register">Registrarse</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
