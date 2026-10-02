@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="SoftBloom.API/SoftBloom.API.csproj" />
+  <Project Path="SoftBloom.Consumer/SoftBloom.Consumer.csproj" Id="c10a57f2-faf6-4368-9035-408665a474e3" />
   <Project Path="SoftBloom.Modelos/SoftBloom.Modelos.csproj" />
 </Solution>

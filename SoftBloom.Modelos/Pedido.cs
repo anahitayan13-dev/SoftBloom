@@ -13,7 +13,7 @@ namespace SoftBloom.Modelos
         [Column("id_pedido")]
         public int IdPedido { get; set; }
 
-        [Column("fecha_pedido")]
+        [Column("fecha_pedido", TypeName = "timestamp without time zone")]
         [Required]
         public DateTime FechaPedido { get; set; }
 
